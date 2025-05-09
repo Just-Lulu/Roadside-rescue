@@ -11,6 +11,7 @@ import UserSignup from "./pages/UserSignup";
 import MechanicSignup from "./pages/MechanicSignup";
 import FindMechanic from "./pages/FindMechanic";
 import MechanicProfile from "./pages/MechanicProfile";
+import RequestHelp from "./pages/RequestHelp";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/mechanic-signup" element={<MechanicSignup />} />
           <Route path="/find-mechanic" element={<FindMechanic />} />
           <Route path="/mechanic-profile/:id" element={<MechanicProfile />} />
+          <Route path="/request-help/:id" element={<RequestHelp />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
