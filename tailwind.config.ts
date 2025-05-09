@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -52,6 +53,32 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+        roadside: {
+          50: '#f0f7ff',
+          100: '#e0effe',
+          200: '#bae0fd',
+          300: '#7cc5fb',
+          400: '#37a5f6',
+          500: '#1088e5',
+          600: '#0069c2',
+          700: '#00529e',
+          800: '#014682',
+          900: '#03396c',
+          950: '#01264a',
+        },
+        accent: {
+          50: '#effef7',
+          100: '#dafeef',
+          200: '#b8fadd',
+          300: '#81f4c3',
+          400: '#45e5a2',
+          500: '#1dce85',
+          600: '#0fb06c',
+          700: '#108a58',
+          800: '#116c48',
+          900: '#11593c',
+          950: '#023321',
+        },
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -84,11 +111,16 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+        'pulse-slow': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.7' },
+        }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+        'pulse-slow': 'pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 			}
 		}
 	},
