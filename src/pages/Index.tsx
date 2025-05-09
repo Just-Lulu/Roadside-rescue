@@ -14,45 +14,23 @@ const Index = () => {
     {
       icon: <Route size={48} className="text-roadside-500" />,
       title: "Towing Service",
-      description: "Need a tow? We'll connect you with nearby towing services to get you to a repair shop."
+      description: "Need a tow? We'll connect you with nearby towing services to get you to a repair shop in Nigeria."
     },
     {
       icon: <Clock size={48} className="text-roadside-500" />,
       title: "Quick Repairs",
-      description: "For minor issues, get roadside repairs that get you back on the road without a tow."
+      description: "For minor issues, get roadside repairs that get you back on Nigerian roads without a tow."
     },
     {
       icon: <CreditCard size={48} className="text-roadside-500" />,
       title: "Transparent Pricing",
-      description: "See estimated costs upfront. No hidden fees or surprises when the mechanic arrives."
+      description: "See estimated costs upfront in Naira. No hidden fees or surprises when the mechanic arrives."
     },
     {
       icon: <MessageCircle size={48} className="text-roadside-500" />,
       title: "Direct Communication",
-      description: "Chat directly with your mechanic to describe your vehicle issues in detail."
+      description: "Chat directly with your Nigerian mechanic to describe your vehicle issues in detail."
     },
-  ];
-
-  // Sample testimonials
-  const testimonials = [
-    {
-      name: "Sarah Johnson",
-      location: "Dallas, TX",
-      text: "I was stranded on a highway 50 miles from home with a flat tire and no spare. Within 15 minutes of using RoadReady, a mechanic arrived and got me back on the road.",
-      image: "https://randomuser.me/api/portraits/women/12.jpg"
-    },
-    {
-      name: "Marcus Chen",
-      location: "Portland, OR",
-      text: "As a traveling salesperson, I'm often in unfamiliar cities. RoadReady has saved me multiple times when my car wouldn't start. The mechanics are fast, professional, and fairly priced.",
-      image: "https://randomuser.me/api/portraits/men/32.jpg"
-    },
-    {
-      name: "Aisha Williams",
-      location: "Miami, FL",
-      text: "When my car broke down with my kids in the back seat, I was panicking. The RoadReady app quickly connected me with a mechanic who arrived in 10 minutes. Amazing service!",
-      image: "https://randomuser.me/api/portraits/women/65.jpg"
-    }
   ];
 
   return (
@@ -66,9 +44,9 @@ const Index = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">How RoadReady Works</h2>
+            <h2 className="text-3xl font-bold text-gray-900">How RoadReady Nigeria Works</h2>
             <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
-              Get back on the road in three simple steps
+              Get back on Nigerian roads in three simple steps
             </p>
           </div>
 
@@ -80,7 +58,7 @@ const Index = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">Share Your Location</h3>
               <p className="text-gray-600">
-                Use our app to share your location and describe your vehicle issue.
+                Use our app to share your location in Nigeria and describe your vehicle issue.
               </p>
             </div>
 
@@ -91,7 +69,7 @@ const Index = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">Get Matched</h3>
               <p className="text-gray-600">
-                We'll connect you with nearby mechanics who can help with your specific issue.
+                We'll connect you with nearby Nigerian mechanics who can help with your specific issue.
               </p>
             </div>
 
@@ -121,9 +99,9 @@ const Index = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">Services We Offer</h2>
+            <h2 className="text-3xl font-bold text-gray-900">Services We Offer in Nigeria</h2>
             <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
-              From flat tires to dead batteries, our mechanics can handle a variety of roadside emergencies
+              From flat tires to dead batteries, our mechanics can handle a variety of roadside emergencies across Nigeria
             </p>
           </div>
 
@@ -152,18 +130,18 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center">
             <div className="w-full md:w-1/2 mb-10 md:mb-0">
-              <h2 className="text-3xl font-bold mb-6">Why Choose RoadReady?</h2>
+              <h2 className="text-3xl font-bold mb-6">Why Choose RoadReady Nigeria?</h2>
               <p className="text-xl text-roadside-100 mb-8 max-w-lg">
-                We make finding roadside assistance simple, fast, and stress-free, even when you're in an unfamiliar location.
+                We make finding roadside assistance simple, fast, and stress-free, even when you're in an unfamiliar location in Nigeria.
               </p>
 
               <div className="space-y-4">
                 {[
-                  "Vetted, professional mechanics",
+                  "Vetted, professional Nigerian mechanics",
                   "Average response time under 20 minutes",
                   "Service available 24/7, 365 days a year",
-                  "Transparent, upfront pricing",
-                  "Real-time mechanic tracking"
+                  "Transparent, upfront pricing in Naira",
+                  "Real-time mechanic tracking across Nigeria"
                 ].map((benefit, index) => (
                   <div key={index} className="flex items-center">
                     <Check className="text-accent-400 mr-2" />
@@ -175,9 +153,9 @@ const Index = () => {
 
             <div className="w-full md:w-1/2 pl-0 md:pl-12">
               <div className="bg-white rounded-lg shadow-xl p-8 text-gray-900">
-                <h3 className="text-2xl font-bold mb-4 text-roadside-800">Join RoadReady Today</h3>
+                <h3 className="text-2xl font-bold mb-4 text-roadside-800">Join RoadReady Nigeria Today</h3>
                 <p className="text-gray-600 mb-6">
-                  Create a free account to get roadside assistance when you need it most.
+                  Create a free account to get roadside assistance when you need it most across Nigeria.
                 </p>
                 <div className="space-y-4">
                   <Link to="/user-signup" className="w-full block">
@@ -200,39 +178,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">What Our Users Say</h2>
-            <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
-              Real stories from drivers we've helped get back on the road
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="overflow-hidden border-none shadow-lg">
-                <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
-                    <img 
-                      src={testimonial.image} 
-                      alt={testimonial.name} 
-                      className="w-12 h-12 rounded-full mr-4 object-cover"
-                    />
-                    <div>
-                      <h4 className="font-semibold">{testimonial.name}</h4>
-                      <p className="text-sm text-gray-500">{testimonial.location}</p>
-                    </div>
-                  </div>
-                  <p className="text-gray-700 italic">"{testimonial.text}"</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CTA */}
       <section className="bg-accent-500 py-16">
         <div className="container mx-auto px-4 text-center">
@@ -240,7 +185,7 @@ const Index = () => {
             Ready to Get Started?
           </h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Join thousands of drivers who rely on RoadReady for quick roadside assistance.
+            Join thousands of Nigerian drivers who rely on RoadReady for quick roadside assistance.
           </p>
           <Link to="/user-signup">
             <Button size="lg" className="bg-white text-accent-700 hover:bg-white/90">

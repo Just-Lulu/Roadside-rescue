@@ -10,17 +10,38 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Search, Route, MapPin } from 'lucide-react';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue 
+} from "@/components/ui/select";
 import ServiceCard, { ServiceType } from '@/components/ServiceCard';
 
-// Mock data for mechanics
+// Nigerian cities for location selection
+const nigerianCities = [
+  "Lagos", 
+  "Abuja", 
+  "Port Harcourt", 
+  "Kano", 
+  "Ibadan", 
+  "Kaduna", 
+  "Enugu", 
+  "Benin City", 
+  "Calabar", 
+  "Warri"
+];
+
+// Mock data for mechanics in Nigeria
 const mockMechanics = [
   {
     id: '1',
-    name: 'Quick Fix Auto',
+    name: 'Quick Fix Auto Nigeria',
     rating: 4.8,
     distance: '1.2',
     estimatedArrival: '12',
-    address: '123 Main St, Anytown, USA',
+    address: '123 Herbert Macaulay Way, Yaba, Lagos',
     services: {
       towing: true,
       jumpStart: true,
@@ -33,11 +54,11 @@ const mockMechanics = [
   },
   {
     id: '2',
-    name: 'Highway Heroes',
+    name: 'Highway Heroes Naija',
     rating: 4.6,
     distance: '2.5',
     estimatedArrival: '18',
-    address: '456 Oak Ave, Somewhere, USA',
+    address: '456 Ahmadu Bello Way, Garki, Abuja',
     services: {
       towing: true,
       jumpStart: true,
@@ -50,11 +71,11 @@ const mockMechanics = [
   },
   {
     id: '3',
-    name: 'Reliable Roadside',
+    name: 'Reliable Roadside Nigeria',
     rating: 4.9,
     distance: '3.7',
     estimatedArrival: '25',
-    address: '789 Pine Blvd, Nowhere, USA',
+    address: '789 Adeola Odeku St, Victoria Island, Lagos',
     services: {
       towing: true,
       jumpStart: true,
@@ -69,6 +90,7 @@ const mockMechanics = [
 
 const FindMechanic = () => {
   const [location, setLocation] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [mechanics, setMechanics] = useState(mockMechanics);
   const [selectedMechanic, setSelectedMechanic] = useState<string | null>(null);
@@ -84,6 +106,20 @@ const FindMechanic = () => {
       // In a real app, this would filter mechanics based on proximity to the location
       console.log(`Searching near: ${location}`);
     }, 1000);
+  };
+
+  // Handle city selection
+  const handleCityChange = (value: string) => {
+    setSelectedCity(value);
+    setLocation(value);
+    
+    // Simulate search results for the selected city
+    setIsSearching(true);
+    setTimeout(() => {
+      // Filter mechanics based on city (would be a real API call)
+      console.log(`Filtering mechanics in ${value}`);
+      setIsSearching(false);
+    }, 800);
   };
 
   // Handle "Use my location" button
@@ -114,7 +150,7 @@ const FindMechanic = () => {
       <div className="flex-grow bg-gray-50">
         <div className="container mx-auto px-4 py-8">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Find Roadside Assistance</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Find Roadside Assistance in Nigeria</h1>
             <p className="mt-2 text-gray-600">
               Search for mechanics near your location who can help with your vehicle issues
             </p>
@@ -128,11 +164,23 @@ const FindMechanic = () => {
                   <div className="flex-grow relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                     <Input 
-                      placeholder="Enter your location or address" 
+                      placeholder="Enter your location in Nigeria" 
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
                       className="pl-10"
                     />
+                  </div>
+                  <div className="w-full md:w-1/3">
+                    <Select value={selectedCity} onValueChange={handleCityChange}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a city" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {nigerianCities.map(city => (
+                          <SelectItem key={city} value={city}>{city}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="flex gap-2">
                     <Button 
@@ -212,7 +260,7 @@ const FindMechanic = () => {
                                       <span className="mx-2 text-gray-300">•</span>
                                       <span className="text-gray-600 flex items-center text-sm">
                                         <MapPin size={14} className="mr-1" />
-                                        {mechanic.distance} miles away
+                                        {mechanic.distance} km away
                                       </span>
                                     </div>
                                   </div>
