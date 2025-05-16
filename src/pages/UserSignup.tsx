@@ -10,6 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
+import { toast } from 'sonner';
 
 const UserSignup = () => {
   const [formData, setFormData] = useState({
@@ -41,8 +42,20 @@ const UserSignup = () => {
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
+      toast.success("Account created successfully!");
       console.log('Signup submitted', formData);
       // Here you would handle registration with Supabase
+    }, 1000);
+  };
+  
+  const handleSocialLogin = (provider: string) => {
+    setIsLoading(true);
+    // Simulate social auth
+    setTimeout(() => {
+      setIsLoading(false);
+      toast.success(`Successfully signed in with ${provider}`);
+      console.log(`Login with ${provider}`);
+      // Here you would handle social auth with Supabase
     }, 1000);
   };
 
@@ -109,7 +122,7 @@ const UserSignup = () => {
                       id="phone" 
                       name="phone" 
                       type="tel" 
-                      placeholder="(123) 456-7890" 
+                      placeholder="+234 801 234 5678" 
                       value={formData.phone}
                       onChange={handleChange}
                       required 
@@ -234,15 +247,30 @@ const UserSignup = () => {
               </div>
               
               <div className="grid grid-cols-2 gap-4">
-                <Button variant="outline" className="w-full">
-                  <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.283 10.356h-8.327v3.451h4.792c-.446 2.193-2.313 3.453-4.792 3.453a5.27 5.27 0 0 1-5.279-5.28 5.27 5.27 0 0 1 5.279-5.279c1.259 0 2.397.447 3.29 1.178l2.6-2.599c-1.584-1.381-3.615-2.233-5.89-2.233a8.908 8.908 0 0 0-8.934 8.934 8.907 8.907 0 0 0 8.934 8.934c4.467 0 8.529-3.249 8.529-8.934 0-.528-.081-1.097-.202-1.625z"></path>
+                <Button 
+                  variant="outline" 
+                  className="w-full flex items-center justify-center gap-2 border-gray-300 hover:bg-gray-50 transition"
+                  onClick={() => handleSocialLogin('Google')}
+                  disabled={isLoading}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5">
+                    <path fill="#EA4335" d="M5.26620003,9.76452941 C6.19878754,6.93863203 8.85444915,4.90909091 12,4.90909091 C13.6909091,4.90909091 15.2181818,5.50909091 16.4181818,6.49090909 L19.9090909,3 C17.7818182,1.14545455 15.0545455,0 12,0 C7.27006974,0 3.1977497,2.69829785 1.23999023,6.65002441 L5.26620003,9.76452941 Z"/>
+                    <path fill="#34A853" d="M16.0407269,18.0125889 C14.9509167,18.7163016 13.5660892,19.0909091 12,19.0909091 C8.86648613,19.0909091 6.21911939,17.076871 5.27698177,14.2678769 L1.23746264,17.3349879 C3.19279051,21.2970142 7.26500293,24 12,24 C14.9328362,24 17.7353462,22.9573905 19.834192,20.9995801 L16.0407269,18.0125889 Z"/>
+                    <path fill="#4A90E2" d="M19.834192,20.9995801 C22.0291676,18.9520994 23.4545455,15.903663 23.4545455,12 C23.4545455,11.2909091 23.3454545,10.5272727 23.1818182,9.81818182 L12,9.81818182 L12,14.4545455 L18.4363636,14.4545455 C18.1187732,16.013626 17.2662994,17.2212117 16.0407269,18.0125889 L19.834192,20.9995801 Z"/>
+                    <path fill="#FBBC05" d="M5.27698177,14.2678769 C5.03832634,13.556323 4.90909091,12.7937589 4.90909091,12 C4.90909091,11.2182781 5.03443647,10.4668121 5.26620003,9.76452941 L1.23999023,6.65002441 C0.43658717,8.26043162 0,10.0753848 0,12 C0,13.9195484 0.444780743,15.7301709 1.23746264,17.3349879 L5.27698177,14.2678769 Z"/>
                   </svg>
                   Google
                 </Button>
-                <Button variant="outline" className="w-full">
-                  <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.67.91-1.377 0-2.332-1.26-3.428-2.8-1.287-1.82-2.323-4.63-2.323-7.28 0-4.28 2.797-6.55 5.552-6.55 1.448 0 2.675.95 3.6.95.865 0 2.222-1.01 3.902-1.01.613 0 2.886.06 4.374 2.19-.13.09-2.383 1.37-2.383 4.19 0 3.26 2.854 4.42 2.955 4.45z"></path>
+                <Button 
+                  variant="outline" 
+                  className="w-full flex items-center justify-center gap-2 border-gray-300 hover:bg-gray-50 transition"
+                  onClick={() => handleSocialLogin('Apple')}
+                  disabled={isLoading}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5">
+                    <path d="M14.94,5.19A4.38,4.38,0,0,0,16,2,4.44,4.44,0,0,0,13,3.52,4.18,4.18,0,0,0,12,6.61,3.66,3.66,0,0,0,14.94,5.19Z"/>
+                    <path d="M16.83,6.39A4.63,4.63,0,0,0,14,10.09a4.28,4.28,0,0,0,2.11-.55A5.13,5.13,0,0,0,18.53,6,4.39,4.39,0,0,0,16.83,6.39Z"/>
+                    <path d="M21.41,16c-.35-1,1-3.43.5-5.38s-2.47-3.09-3.68-3.7C16.89,6.2,15.06,7,13.4,7S9.92,6.2,8.58,6.92C7.37,7.53,6.3,9.05,5.79,11s.9,4.43.55,5.38C5.6,18,4,22,6,22c1.73,0,3-1.95,5.07-2s3.32,2,5.05,2C18,22,16.44,18,21.41,16Z"/>
                   </svg>
                   Apple
                 </Button>

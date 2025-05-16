@@ -7,24 +7,27 @@ import { Card, CardContent } from '@/components/ui/card';
 import { 
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue 
 } from "@/components/ui/select";
 
-// Nigerian cities for location selection
-export const nigerianCities = [
-  "Lagos", 
-  "Abuja", 
-  "Port Harcourt", 
-  "Kano", 
-  "Ibadan", 
-  "Kaduna", 
-  "Enugu", 
-  "Benin City", 
-  "Calabar", 
-  "Warri"
+// Nigerian states and LGAs for location selection
+export const nigerianStates = [
+  "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", 
+  "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT", "Gombe", "Imo", 
+  "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", 
+  "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"
 ];
+
+// Sample LGAs for Lagos (in real app, this would be dynamic based on selected state)
+export const nigerianLGAs = {
+  Lagos: ["Agege", "Ajeromi-Ifelodun", "Alimosho", "Amuwo-Odofin", "Apapa", "Badagry", "Epe", "Eti-Osa", "Ibeju-Lekki", "Ifako-Ijaiye", "Ikeja", "Ikorodu", "Kosofe", "Lagos Island", "Lagos Mainland", "Mushin", "Ojo", "Oshodi-Isolo", "Shomolu", "Surulere"],
+  Abuja: ["Abaji", "Bwari", "Gwagwalada", "Kuje", "Kwali", "Municipal Area Council"],
+  // In a real app, you would include all LGAs for all states
+};
 
 interface SearchFormProps {
   location: string;
@@ -62,12 +65,15 @@ const SearchForm: React.FC<SearchFormProps> = ({
             <div className="w-full md:w-1/3">
               <Select value={selectedCity} onValueChange={handleCityChange}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a city" />
+                  <SelectValue placeholder="Select a state" />
                 </SelectTrigger>
                 <SelectContent>
-                  {nigerianCities.map(city => (
-                    <SelectItem key={city} value={city}>{city}</SelectItem>
-                  ))}
+                  <SelectGroup>
+                    <SelectLabel>States</SelectLabel>
+                    {nigerianStates.map(state => (
+                      <SelectItem key={state} value={state}>{state}</SelectItem>
+                    ))}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
             </div>

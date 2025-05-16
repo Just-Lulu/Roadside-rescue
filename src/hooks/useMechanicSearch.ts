@@ -18,7 +18,7 @@ const mockMechanics = [
       lockoutService: false,
       basicRepair: true
     },
-    image: 'https://randomuser.me/api/portraits/men/32.jpg'
+    image: 'https://randomuser.me/api/portraits/men/82.jpg' // Nigerian appearance
   },
   {
     id: '2',
@@ -35,7 +35,7 @@ const mockMechanics = [
       lockoutService: true,
       basicRepair: false
     },
-    image: 'https://randomuser.me/api/portraits/women/44.jpg'
+    image: 'https://randomuser.me/api/portraits/women/74.jpg' // Nigerian appearance
   },
   {
     id: '3',
@@ -52,7 +52,7 @@ const mockMechanics = [
       lockoutService: true,
       basicRepair: true
     },
-    image: 'https://randomuser.me/api/portraits/men/67.jpg'
+    image: 'https://randomuser.me/api/portraits/men/67.jpg' // Nigerian appearance
   }
 ];
 

@@ -16,15 +16,15 @@ import { Phone, MessageCircle, Clock, MapPin, Star } from 'lucide-react';
 const mockMechanicProfile = {
   id: '1',
   name: 'Quick Fix Auto',
-  ownerName: 'Michael Johnson',
+  ownerName: 'Michael Okonkwo',
   rating: 4.8,
   reviewCount: 124,
   distance: '1.2',
   estimatedArrival: '12',
-  phone: '(555) 123-4567',
+  phone: '(+234) 123-4567',
   email: 'service@quickfixauto.com',
-  address: '123 Main St, Anytown, USA',
-  bio: 'With over 15 years of experience, Quick Fix Auto specializes in emergency roadside assistance. We pride ourselves on fast response times and quality service at fair prices.',
+  address: '123 Herbert Macaulay Way, Yaba, Lagos',
+  bio: 'With over 15 years of experience, Quick Fix Auto specializes in emergency roadside assistance in Lagos and surrounding areas. We pride ourselves on fast response times and quality service at fair prices.',
   services: {
     towing: true,
     jumpStart: true,
@@ -33,32 +33,32 @@ const mockMechanicProfile = {
     lockoutService: false,
     basicRepair: true
   },
-  image: 'https://randomuser.me/api/portraits/men/32.jpg',
+  image: 'https://randomuser.me/api/portraits/men/82.jpg',
   gallery: [
-    'https://images.unsplash.com/photo-1606611013016-96d4daaa6415?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
-    'https://images.unsplash.com/photo-1599256662039-c5d4f637e01c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
-    'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80'
+    'https://images.unsplash.com/photo-1630253953396-2473d4d35767?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
+    'https://images.unsplash.com/photo-1566335142441-12536a48ede4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
+    'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80'
   ],
   reviews: [
     {
       id: '1',
-      user: 'Sarah T.',
+      user: 'Chinwe A.',
       rating: 5,
       date: '2 weeks ago',
-      comment: 'Michael arrived within 15 minutes after I called for help with my flat tire. Very professional and friendly service!',
-      avatar: 'https://randomuser.me/api/portraits/women/12.jpg'
+      comment: 'Michael arrived within 15 minutes after I called for help with my flat tire on Third Mainland Bridge. Very professional and friendly service!',
+      avatar: 'https://randomuser.me/api/portraits/women/79.jpg'
     },
     {
       id: '2',
-      user: 'James L.',
+      user: 'Emeka L.',
       rating: 4,
       date: '1 month ago',
-      comment: 'Quick response time and reasonable pricing. Helped me jump start my car when the battery died.',
+      comment: 'Quick response time and reasonable pricing. Helped me jump start my car when the battery died in Victoria Island.',
       avatar: 'https://randomuser.me/api/portraits/men/45.jpg'
     },
     {
       id: '3',
-      user: 'Karen M.',
+      user: 'Ngozi M.',
       rating: 5,
       date: '2 months ago',
       comment: 'I was stranded on the highway with a dead battery, and Quick Fix came to my rescue. Excellent service!',
