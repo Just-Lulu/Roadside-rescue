@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -70,7 +71,7 @@ const UserSignup = () => {
       <Navbar />
       
       <div className="flex-grow py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <Card>
             <CardHeader className="space-y-1 text-center">
               <CardTitle className="text-2xl font-bold">Create a Driver Account</CardTitle>
@@ -79,162 +80,170 @@ const UserSignup = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="firstName">First Name</Label>
-                    <Input 
-                      id="firstName" 
-                      name="firstName" 
-                      placeholder="John" 
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      required 
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="lastName">Last Name</Label>
-                    <Input 
-                      id="lastName" 
-                      name="lastName" 
-                      placeholder="Doe" 
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      required 
-                    />
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input 
-                      id="email" 
-                      name="email" 
-                      type="email" 
-                      placeholder="john.doe@example.com" 
-                      value={formData.email}
-                      onChange={handleChange}
-                      required 
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input 
-                      id="phone" 
-                      name="phone" 
-                      type="tel" 
-                      placeholder="+234 801 234 5678" 
-                      value={formData.phone}
-                      onChange={handleChange}
-                      required 
-                    />
+              <form onSubmit={handleSubmit} className="space-y-8">
+                {/* Personal Information Grid */}
+                <div>
+                  <h3 className="text-lg font-medium mb-4">Personal Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName">First Name</Label>
+                      <Input 
+                        id="firstName" 
+                        name="firstName" 
+                        placeholder="John" 
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        required 
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName">Last Name</Label>
+                      <Input 
+                        id="lastName" 
+                        name="lastName" 
+                        placeholder="Doe" 
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        required 
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email</Label>
+                      <Input 
+                        id="email" 
+                        name="email" 
+                        type="email" 
+                        placeholder="john.doe@example.com" 
+                        value={formData.email}
+                        onChange={handleChange}
+                        required 
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone Number</Label>
+                      <Input 
+                        id="phone" 
+                        name="phone" 
+                        type="tel" 
+                        placeholder="+234 801 234 5678" 
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required 
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="password">Password</Label>
-                    <Input 
-                      id="password" 
-                      name="password" 
-                      type="password" 
-                      placeholder="••••••••" 
-                      value={formData.password}
-                      onChange={handleChange}
-                      required 
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="confirmPassword">Confirm Password</Label>
-                    <Input 
-                      id="confirmPassword" 
-                      name="confirmPassword" 
-                      type="password" 
-                      placeholder="••••••••" 
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      required 
-                    />
+                {/* Security Information Grid */}
+                <div>
+                  <h3 className="text-lg font-medium mb-4">Security Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="password">Password</Label>
+                      <Input 
+                        id="password" 
+                        name="password" 
+                        type="password" 
+                        placeholder="••••••••" 
+                        value={formData.password}
+                        onChange={handleChange}
+                        required 
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="confirmPassword">Confirm Password</Label>
+                      <Input 
+                        id="confirmPassword" 
+                        name="confirmPassword" 
+                        type="password" 
+                        placeholder="••••••••" 
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        required 
+                      />
+                    </div>
                   </div>
                 </div>
                 
                 <Separator />
                 
+                {/* Vehicle Information Grid */}
                 <div>
                   <h3 className="text-lg font-medium">Vehicle Information (Optional)</h3>
                   <p className="text-sm text-gray-500 mt-1 mb-4">
                     Adding your vehicle details helps mechanics provide more accurate assistance
                   </p>
-                </div>
-                
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                  <div className="space-y-2">
-                    <Label htmlFor="vehicleMake">Vehicle Make</Label>
-                    <Input 
-                      id="vehicleMake" 
-                      name="vehicleMake" 
-                      placeholder="Toyota" 
-                      value={formData.vehicleMake}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="vehicleModel">Vehicle Model</Label>
-                    <Input 
-                      id="vehicleModel" 
-                      name="vehicleModel" 
-                      placeholder="Camry" 
-                      value={formData.vehicleModel}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="vehicleYear">Vehicle Year</Label>
-                    <Select>
-                      <SelectTrigger id="vehicleYear">
-                        <SelectValue placeholder="Select Year" />
-                      </SelectTrigger>
-                      <SelectContent className="max-h-60">
-                        {years.map((year) => (
-                          <SelectItem key={year} value={year.toString()}>
-                            {year}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="vehicleMake">Vehicle Make</Label>
+                      <Input 
+                        id="vehicleMake" 
+                        name="vehicleMake" 
+                        placeholder="Toyota" 
+                        value={formData.vehicleMake}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="vehicleModel">Vehicle Model</Label>
+                      <Input 
+                        id="vehicleModel" 
+                        name="vehicleModel" 
+                        placeholder="Camry" 
+                        value={formData.vehicleModel}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="vehicleYear">Vehicle Year</Label>
+                      <Select>
+                        <SelectTrigger id="vehicleYear">
+                          <SelectValue placeholder="Select Year" />
+                        </SelectTrigger>
+                        <SelectContent className="max-h-60">
+                          {years.map((year) => (
+                            <SelectItem key={year} value={year.toString()}>
+                              {year}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="terms" 
-                    checked={acceptTerms}
-                    onCheckedChange={(checked: boolean) => setAcceptTerms(checked)}
-                    required
-                  />
-                  <label
-                    htmlFor="terms"
-                    className="text-sm text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                {/* Terms and Submit */}
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="terms" 
+                      checked={acceptTerms}
+                      onCheckedChange={(checked: boolean) => setAcceptTerms(checked)}
+                      required
+                    />
+                    <label
+                      htmlFor="terms"
+                      className="text-sm text-gray-600 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      I agree to the{" "}
+                      <Link to="/terms" className="text-roadside-600 hover:underline">
+                        Terms of Service
+                      </Link>{" "}
+                      and{" "}
+                      <Link to="/privacy" className="text-roadside-600 hover:underline">
+                        Privacy Policy
+                      </Link>
+                    </label>
+                  </div>
+                  
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-roadside-600 hover:bg-roadside-700" 
+                    disabled={!acceptTerms || isLoading}
                   >
-                    I agree to the{" "}
-                    <Link to="/terms" className="text-roadside-600 hover:underline">
-                      Terms of Service
-                    </Link>{" "}
-                    and{" "}
-                    <Link to="/privacy" className="text-roadside-600 hover:underline">
-                      Privacy Policy
-                    </Link>
-                  </label>
+                    {isLoading ? 'Creating account...' : 'Create Account'}
+                  </Button>
                 </div>
-                
-                <Button 
-                  type="submit" 
-                  className="w-full bg-roadside-600 hover:bg-roadside-700" 
-                  disabled={!acceptTerms || isLoading}
-                >
-                  {isLoading ? 'Creating account...' : 'Create Account'}
-                </Button>
               </form>
               
               <div className="relative my-6">

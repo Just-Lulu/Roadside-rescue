@@ -1,12 +1,31 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 const Dashboard = () => {
-  // This is a placeholder dashboard that will be expanded upon in future iterations
+  const navigate = useNavigate();
+  
+  const handleRequestAssistance = () => {
+    toast.success("Redirecting to find mechanics near you...");
+    navigate('/find-mechanic');
+  };
+  
+  const handleAddVehicle = () => {
+    toast.info("Vehicle management feature coming soon!");
+    // This could navigate to a vehicle management page in the future
+    console.log("Add vehicle functionality triggered");
+  };
+  
+  const handleAddPaymentMethod = () => {
+    toast.info("Payment method setup coming soon!");
+    // This could integrate with Stripe or other payment providers
+    console.log("Add payment method functionality triggered");
+  };
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -17,8 +36,7 @@ const Dashboard = () => {
           <h1 className="text-3xl font-bold mb-6">Your Dashboard</h1>
           
           <p className="text-gray-600 mb-8">
-            This dashboard will display your activity and allow you to manage your account settings.
-            It will be expanded in future updates.
+            Welcome to your dashboard! Manage your account, vehicles, and request assistance when needed.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -31,7 +49,10 @@ const Dashboard = () => {
                 <p className="text-gray-500 text-center py-8">
                   No recent activity to display
                 </p>
-                <Button className="w-full bg-roadside-600 hover:bg-roadside-700">
+                <Button 
+                  className="w-full bg-roadside-600 hover:bg-roadside-700"
+                  onClick={handleRequestAssistance}
+                >
                   Request Assistance
                 </Button>
               </CardContent>
@@ -46,7 +67,10 @@ const Dashboard = () => {
                 <p className="text-gray-500 text-center py-8">
                   No vehicles added yet
                 </p>
-                <Button className="w-full bg-roadside-600 hover:bg-roadside-700">
+                <Button 
+                  className="w-full bg-roadside-600 hover:bg-roadside-700"
+                  onClick={handleAddVehicle}
+                >
                   Add a Vehicle
                 </Button>
               </CardContent>
@@ -61,7 +85,10 @@ const Dashboard = () => {
                 <p className="text-gray-500 text-center py-8">
                   No payment methods added
                 </p>
-                <Button className="w-full bg-roadside-600 hover:bg-roadside-700">
+                <Button 
+                  className="w-full bg-roadside-600 hover:bg-roadside-700"
+                  onClick={handleAddPaymentMethod}
+                >
                   Add Payment Method
                 </Button>
               </CardContent>
