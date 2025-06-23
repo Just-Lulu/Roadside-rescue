@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 
-// Mock data for mechanics in Nigeria
+// Mock data for mechanics in Nigeria with Nigerian/Black profile images
 const mockMechanics = [
   {
     id: '1',
@@ -18,7 +18,7 @@ const mockMechanics = [
       lockoutService: false,
       basicRepair: true
     },
-    image: 'https://randomuser.me/api/portraits/men/82.jpg'
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face'
   },
   {
     id: '2',
@@ -35,7 +35,7 @@ const mockMechanics = [
       lockoutService: true,
       basicRepair: false
     },
-    image: 'https://randomuser.me/api/portraits/women/74.jpg'
+    image: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=400&fit=crop&crop=face'
   },
   {
     id: '3',
@@ -52,7 +52,7 @@ const mockMechanics = [
       lockoutService: true,
       basicRepair: true
     },
-    image: 'https://randomuser.me/api/portraits/men/67.jpg'
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face'
   }
 ];
 
@@ -88,7 +88,7 @@ export const useMechanicSearch = () => {
     }, 800);
   };
 
-  // Handle "Use my location" button with geolocation
+  // Handle "Use my location" button with enhanced geolocation
   const handleUseLocation = () => {
     setIsSearching(true);
     
@@ -105,17 +105,16 @@ export const useMechanicSearch = () => {
         console.log(`User coordinates: ${latitude}, ${longitude}`);
         
         try {
-          // Use reverse geocoding to get address from coordinates
+          // Using a more reliable reverse geocoding service
           const response = await fetch(
-            `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=YOUR_OPENCAGE_API_KEY&language=en&pretty=1`
+            `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}&accept-language=en`
           );
           
           if (response.ok) {
             const data = await response.json();
-            if (data.results && data.results.length > 0) {
-              const address = data.results[0].formatted;
-              setLocation(address);
-              console.log(`User location: ${address}`);
+            if (data && data.display_name) {
+              setLocation(data.display_name);
+              console.log(`User location: ${data.display_name}`);
             } else {
               setLocation(`${latitude}, ${longitude}`);
             }

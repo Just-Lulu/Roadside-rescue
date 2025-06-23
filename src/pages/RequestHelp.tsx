@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,18 +10,60 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Calendar, Clock, MessageCircle, Phone } from 'lucide-react';
+import { toast } from 'sonner';
 
 const RequestHelp = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [issueType, setIssueType] = useState('flat-tire');
   const [description, setDescription] = useState('');
   const [contactMethod, setContactMethod] = useState('phone');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // This would be implemented to submit the request
-    console.log('Request submitted:', { id, issueType, description, contactMethod });
-    // Add API call here in the future
+    
+    if (!description.trim()) {
+      toast.error('Please provide a description of your issue');
+      return;
+    }
+    
+    if (contactMethod === 'phone' && !phoneNumber.trim()) {
+      toast.error('Please provide your phone number');
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    // Simulate API request
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      const requestData = {
+        mechanicId: id,
+        issueType,
+        description,
+        contactMethod,
+        phoneNumber: contactMethod === 'phone' ? phoneNumber : null,
+        timestamp: new Date().toISOString()
+      };
+      
+      console.log('Service request submitted:', requestData);
+      
+      toast.success('Request submitted successfully! The mechanic will contact you shortly.');
+      
+      // Redirect to dashboard after successful submission
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 2000);
+      
+    } catch (error) {
+      console.error('Error submitting request:', error);
+      toast.error('Failed to submit request. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -51,7 +93,7 @@ const RequestHelp = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <label htmlFor="issue-type" className="block text-sm font-medium text-gray-700">
-                    What's the issue?
+                    What's the issue? *
                   </label>
                   <Select value={issueType} onValueChange={setIssueType}>
                     <SelectTrigger id="issue-type">
@@ -70,20 +112,21 @@ const RequestHelp = () => {
 
                 <div className="space-y-2">
                   <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                    Detailed Description
+                    Detailed Description *
                   </label>
                   <Textarea 
                     id="description" 
-                    placeholder="Please describe your issue in detail..." 
+                    placeholder="Please describe your issue in detail, including your current location..." 
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     rows={4}
+                    required
                   />
                 </div>
 
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-gray-700">
-                    Preferred Contact Method
+                    Preferred Contact Method *
                   </label>
                   <Tabs value={contactMethod} onValueChange={setContactMethod} className="w-full">
                     <TabsList className="grid grid-cols-2 w-full">
@@ -99,12 +142,29 @@ const RequestHelp = () => {
                   </Tabs>
                 </div>
 
+                {contactMethod === 'phone' && (
+                  <div className="space-y-2">
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+                      Your Phone Number *
+                    </label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="+234 xxx xxx xxxx"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      required={contactMethod === 'phone'}
+                    />
+                  </div>
+                )}
+
                 <div className="pt-4">
                   <Button 
                     type="submit" 
                     className="w-full bg-roadside-600 hover:bg-roadside-700"
+                    disabled={isSubmitting}
                   >
-                    Submit Request
+                    {isSubmitting ? 'Submitting Request...' : 'Submit Request'}
                   </Button>
                 </div>
               </form>

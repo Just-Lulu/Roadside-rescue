@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ServiceCard, { ServiceType } from '@/components/ServiceCard';
 import Map from '@/components/Map';
+import InAppMessaging from '@/components/InAppMessaging';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -12,7 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Phone, MessageCircle, Clock, MapPin, Star } from 'lucide-react';
 
-// Mock data for the mechanic profile
+// Mock data for the mechanic profile with Nigerian/Black profile images
 const mockMechanicProfile = {
   id: '1',
   name: 'Quick Fix Auto',
@@ -33,7 +34,7 @@ const mockMechanicProfile = {
     lockoutService: false,
     basicRepair: true
   },
-  image: 'https://randomuser.me/api/portraits/men/82.jpg',
+  image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
   gallery: [
     'https://images.unsplash.com/photo-1630253953396-2473d4d35767?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
     'https://images.unsplash.com/photo-1566335142441-12536a48ede4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
@@ -46,7 +47,7 @@ const mockMechanicProfile = {
       rating: 5,
       date: '2 weeks ago',
       comment: 'Michael arrived within 15 minutes after I called for help with my flat tire on Third Mainland Bridge. Very professional and friendly service!',
-      avatar: 'https://randomuser.me/api/portraits/women/79.jpg'
+      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b524?w=400&h=400&fit=crop&crop=face'
     },
     {
       id: '2',
@@ -54,7 +55,7 @@ const mockMechanicProfile = {
       rating: 4,
       date: '1 month ago',
       comment: 'Quick response time and reasonable pricing. Helped me jump start my car when the battery died in Victoria Island.',
-      avatar: 'https://randomuser.me/api/portraits/men/45.jpg'
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face'
     },
     {
       id: '3',
@@ -62,7 +63,7 @@ const mockMechanicProfile = {
       rating: 5,
       date: '2 months ago',
       comment: 'I was stranded on the highway with a dead battery, and Quick Fix came to my rescue. Excellent service!',
-      avatar: 'https://randomuser.me/api/portraits/women/32.jpg'
+      avatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=400&fit=crop&crop=face'
     }
   ]
 };
@@ -71,6 +72,7 @@ const MechanicProfile = () => {
   const { id } = useParams<{id: string}>();
   const [mechanic, setMechanic] = useState(mockMechanicProfile);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMessagingOpen, setIsMessagingOpen] = useState(false);
 
   useEffect(() => {
     // Simulate API fetch
@@ -165,7 +167,11 @@ const MechanicProfile = () => {
                     <Phone className="mr-2 h-4 w-4" />
                     {mechanic.phone}
                   </Button>
-                  <Button variant="outline" className="border-roadside-600 text-roadside-600">
+                  <Button 
+                    variant="outline" 
+                    className="border-roadside-600 text-roadside-600"
+                    onClick={() => setIsMessagingOpen(true)}
+                  >
                     <MessageCircle className="mr-2 h-4 w-4" />
                     Message
                   </Button>
@@ -299,6 +305,13 @@ const MechanicProfile = () => {
           </div>
         </div>
       </div>
+      
+      <InAppMessaging
+        mechanicName={mechanic.ownerName}
+        mechanicImage={mechanic.image}
+        isOpen={isMessagingOpen}
+        onClose={() => setIsMessagingOpen(false)}
+      />
       
       <Footer />
     </div>
