@@ -16,15 +16,11 @@ const Dashboard = () => {
   };
   
   const handleAddVehicle = () => {
-    toast.info("Vehicle management feature coming soon!");
-    // This could navigate to a vehicle management page in the future
-    console.log("Add vehicle functionality triggered");
+    navigate('/vehicle-management');
   };
   
   const handleAddPaymentMethod = () => {
-    toast.info("Payment method setup coming soon!");
-    // This could integrate with Stripe or other payment providers
-    console.log("Add payment method functionality triggered");
+    navigate('/payment-methods');
   };
   
   return (
@@ -71,7 +67,7 @@ const Dashboard = () => {
                   className="w-full bg-roadside-600 hover:bg-roadside-700"
                   onClick={handleAddVehicle}
                 >
-                  Add a Vehicle
+                  Manage Vehicles
                 </Button>
               </CardContent>
             </Card>
@@ -89,7 +85,7 @@ const Dashboard = () => {
                   className="w-full bg-roadside-600 hover:bg-roadside-700"
                   onClick={handleAddPaymentMethod}
                 >
-                  Add Payment Method
+                  Manage Payment Methods
                 </Button>
               </CardContent>
             </Card>

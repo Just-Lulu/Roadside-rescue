@@ -18,7 +18,7 @@ const mockMechanics = [
       lockoutService: false,
       basicRepair: true
     },
-    image: 'https://randomuser.me/api/portraits/men/82.jpg' // Nigerian appearance
+    image: 'https://randomuser.me/api/portraits/men/82.jpg'
   },
   {
     id: '2',
@@ -35,7 +35,7 @@ const mockMechanics = [
       lockoutService: true,
       basicRepair: false
     },
-    image: 'https://randomuser.me/api/portraits/women/74.jpg' // Nigerian appearance
+    image: 'https://randomuser.me/api/portraits/women/74.jpg'
   },
   {
     id: '3',
@@ -52,7 +52,7 @@ const mockMechanics = [
       lockoutService: true,
       basicRepair: true
     },
-    image: 'https://randomuser.me/api/portraits/men/67.jpg' // Nigerian appearance
+    image: 'https://randomuser.me/api/portraits/men/67.jpg'
   }
 ];
 
@@ -71,7 +71,6 @@ export const useMechanicSearch = () => {
     // Simulate search delay
     setTimeout(() => {
       setIsSearching(false);
-      // In a real app, this would filter mechanics based on proximity to the location
       console.log(`Searching near: ${location}`);
     }, 1000);
   };
@@ -84,21 +83,79 @@ export const useMechanicSearch = () => {
     // Simulate search results for the selected city
     setIsSearching(true);
     setTimeout(() => {
-      // Filter mechanics based on city (would be a real API call)
       console.log(`Filtering mechanics in ${value}`);
       setIsSearching(false);
     }, 800);
   };
 
-  // Handle "Use my location" button
+  // Handle "Use my location" button with geolocation
   const handleUseLocation = () => {
     setIsSearching(true);
     
-    // Simulate getting user's location
-    setTimeout(() => {
-      setLocation('Current Location');
+    if (!navigator.geolocation) {
+      console.error('Geolocation is not supported by this browser');
+      setLocation('Geolocation not supported');
       setIsSearching(false);
-    }, 1000);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        console.log(`User coordinates: ${latitude}, ${longitude}`);
+        
+        try {
+          // Use reverse geocoding to get address from coordinates
+          const response = await fetch(
+            `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=YOUR_OPENCAGE_API_KEY&language=en&pretty=1`
+          );
+          
+          if (response.ok) {
+            const data = await response.json();
+            if (data.results && data.results.length > 0) {
+              const address = data.results[0].formatted;
+              setLocation(address);
+              console.log(`User location: ${address}`);
+            } else {
+              setLocation(`${latitude}, ${longitude}`);
+            }
+          } else {
+            // Fallback to coordinates if geocoding fails
+            setLocation(`${latitude}, ${longitude}`);
+          }
+        } catch (error) {
+          console.error('Error getting location name:', error);
+          // Fallback to coordinates
+          setLocation(`${latitude}, ${longitude}`);
+        }
+        
+        setIsSearching(false);
+      },
+      (error) => {
+        console.error('Error getting location:', error);
+        let errorMessage = 'Unable to get location';
+        
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage = 'Location access denied by user';
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMessage = 'Location information unavailable';
+            break;
+          case error.TIMEOUT:
+            errorMessage = 'Location request timed out';
+            break;
+        }
+        
+        setLocation(errorMessage);
+        setIsSearching(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000
+      }
+    );
   };
 
   // Toggle mechanic selection
@@ -107,7 +164,6 @@ export const useMechanicSearch = () => {
       setSelectedMechanic(null);
     } else {
       setSelectedMechanic(id);
-      // In a real app, this would center the map on the selected mechanic
     }
   };
 

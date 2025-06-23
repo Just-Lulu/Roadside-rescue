@@ -13,6 +13,8 @@ import FindMechanic from "./pages/FindMechanic";
 import MechanicProfile from "./pages/MechanicProfile";
 import RequestHelp from "./pages/RequestHelp";
 import Dashboard from "./pages/Dashboard";
+import VehicleManagement from "./pages/VehicleManagement";
+import PaymentMethods from "./pages/PaymentMethods";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +34,8 @@ const App = () => (
           <Route path="/mechanic-profile/:id" element={<MechanicProfile />} />
           <Route path="/request-help/:id" element={<RequestHelp />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/vehicle-management" element={<VehicleManagement />} />
+          <Route path="/payment-methods" element={<PaymentMethods />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
