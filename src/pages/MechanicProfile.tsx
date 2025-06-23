@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -36,9 +35,9 @@ const mockMechanicProfile = {
   },
   image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
   gallery: [
-    'https://images.unsplash.com/photo-1630253953396-2473d4d35767?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
-    'https://images.unsplash.com/photo-1566335142441-12536a48ede4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
-    'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80'
+    'https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=500&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=500&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=500&h=300&fit=crop'
   ],
   reviews: [
     {
@@ -196,11 +195,15 @@ const MechanicProfile = () => {
                   <h2 className="text-xl font-semibold mb-4">Photo Gallery</h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {mechanic.gallery.map((image, index) => (
-                      <div key={index} className="aspect-video rounded-md overflow-hidden">
+                      <div key={index} className="aspect-video rounded-md overflow-hidden bg-gray-200">
                         <img 
                           src={image} 
                           alt={`${mechanic.name} gallery ${index + 1}`}
                           className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = `https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=500&h=300&fit=crop&sig=${index}`;
+                          }}
                         />
                       </div>
                     ))}
