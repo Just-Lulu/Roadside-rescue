@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { toast } from 'sonner';
 
 const MechanicSignup = () => {
   const [formData, setFormData] = useState({
@@ -35,6 +35,7 @@ const MechanicSignup = () => {
   
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -58,8 +59,10 @@ const MechanicSignup = () => {
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
+      toast.success("Mechanic account created successfully!");
       console.log('Mechanic signup submitted', { ...formData, services });
       // Here you would handle registration with Supabase
+      navigate('/dashboard');
     }, 1000);
   };
 

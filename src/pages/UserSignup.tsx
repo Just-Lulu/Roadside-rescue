@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -26,6 +25,7 @@ const UserSignup = () => {
   });
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -45,6 +45,7 @@ const UserSignup = () => {
       toast.success("Account created successfully!");
       console.log('Signup submitted', formData);
       // Here you would handle registration with Supabase
+      navigate('/dashboard');
     }, 1000);
   };
   
@@ -56,6 +57,7 @@ const UserSignup = () => {
       toast.success(`Successfully signed in with ${provider}`);
       console.log(`Login with ${provider}`);
       // Here you would handle social auth with Supabase
+      navigate('/dashboard');
     }, 1000);
   };
 
