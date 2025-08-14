@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { toast } from 'sonner';
+import { useAuth } from '@/hooks/useAuth';
 
 const UserSignup = () => {
   const [formData, setFormData] = useState({
@@ -26,7 +26,15 @@ const UserSignup = () => {
   });
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { signUp, signInWithGoogle, user } = useAuth();
   const navigate = useNavigate();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -36,30 +44,34 @@ const UserSignup = () => {
     }));
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
+    if (formData.password !== formData.confirmPassword) {
       setIsLoading(false);
-      toast.success("Account created successfully!");
-      console.log('Signup submitted', formData);
-      // Here you would handle registration with Supabase
-      navigate('/dashboard');
-    }, 1000);
+      return;
+    }
+    
+    const { error } = await signUp(formData.email, formData.password, {
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      user_type: 'driver'
+    });
+    
+    if (!error) {
+      // User will be redirected after email confirmation
+    }
+    
+    setIsLoading(false);
   };
   
-  const handleSocialLogin = (provider: string) => {
-    setIsLoading(true);
-    // Simulate social auth
-    setTimeout(() => {
+  const handleSocialLogin = async (provider: string) => {
+    if (provider === 'Google') {
+      setIsLoading(true);
+      await signInWithGoogle();
       setIsLoading(false);
-      toast.success(`Successfully signed in with ${provider}`);
-      console.log(`Login with ${provider}`);
-      // Here you would handle social auth with Supabase
-      navigate('/dashboard');
-    }, 1000);
+    }
   };
 
   // Sample years for vehicle selection

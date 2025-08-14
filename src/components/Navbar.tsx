@@ -2,10 +2,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
+import { useAuth } from '@/hooks/useAuth';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, signOut } = useAuth();
   
   // Toggle mobile menu
   const toggleMenu = () => {
@@ -27,15 +29,34 @@ const Navbar: React.FC = () => {
         <div className="hidden md:flex items-center space-x-6">
           <Link to="/" className="text-gray-700 hover:text-roadside-600 transition-colors">Home</Link>
           <Link to="/find-mechanic" className="text-gray-700 hover:text-roadside-600 transition-colors">Find Mechanic</Link>
-          <Link to="/login" className="text-gray-700 hover:text-roadside-600 transition-colors">Login</Link>
-          <Link to="/user-signup">
-            <Button className="bg-roadside-600 hover:bg-roadside-700">Sign Up</Button>
-          </Link>
-          <Link to="/mechanic-signup">
-            <Button variant="outline" className="border-roadside-600 text-roadside-600 hover:bg-roadside-50">
-              Register as Mechanic
-            </Button>
-          </Link>
+          
+          {user ? (
+            <div className="flex items-center space-x-4">
+              <Link to="/dashboard" className="text-gray-700 hover:text-roadside-600 transition-colors flex items-center space-x-1">
+                <User size={16} />
+                <span>Dashboard</span>
+              </Link>
+              <Button 
+                variant="outline" 
+                onClick={signOut}
+                className="border-roadside-600 text-roadside-600 hover:bg-roadside-50"
+              >
+                Sign Out
+              </Button>
+            </div>
+          ) : (
+            <>
+              <Link to="/login" className="text-gray-700 hover:text-roadside-600 transition-colors">Login</Link>
+              <Link to="/user-signup">
+                <Button className="bg-roadside-600 hover:bg-roadside-700">Sign Up</Button>
+              </Link>
+              <Link to="/mechanic-signup">
+                <Button variant="outline" className="border-roadside-600 text-roadside-600 hover:bg-roadside-50">
+                  Register as Mechanic
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -66,23 +87,49 @@ const Navbar: React.FC = () => {
             >
               Find Mechanic
             </Link>
-            <Link 
-              to="/login" 
-              className="text-gray-700 hover:text-roadside-600 transition-colors py-2"
-              onClick={toggleMenu}
-            >
-              Login
-            </Link>
-            <Link to="/user-signup" onClick={toggleMenu}>
-              <Button className="w-full bg-roadside-600 hover:bg-roadside-700">
-                Sign Up
-              </Button>
-            </Link>
-            <Link to="/mechanic-signup" onClick={toggleMenu}>
-              <Button variant="outline" className="w-full border-roadside-600 text-roadside-600 hover:bg-roadside-50">
-                Register as Mechanic
-              </Button>
-            </Link>
+            
+            {user ? (
+              <>
+                <Link 
+                  to="/dashboard" 
+                  className="text-gray-700 hover:text-roadside-600 transition-colors py-2 flex items-center space-x-1"
+                  onClick={toggleMenu}
+                >
+                  <User size={16} />
+                  <span>Dashboard</span>
+                </Link>
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    signOut();
+                    toggleMenu();
+                  }}
+                  className="w-full border-roadside-600 text-roadside-600 hover:bg-roadside-50"
+                >
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link 
+                  to="/login" 
+                  className="text-gray-700 hover:text-roadside-600 transition-colors py-2"
+                  onClick={toggleMenu}
+                >
+                  Login
+                </Link>
+                <Link to="/user-signup" onClick={toggleMenu}>
+                  <Button className="w-full bg-roadside-600 hover:bg-roadside-700">
+                    Sign Up
+                  </Button>
+                </Link>
+                <Link to="/mechanic-signup" onClick={toggleMenu}>
+                  <Button variant="outline" className="w-full border-roadside-600 text-roadside-600 hover:bg-roadside-50">
+                    Register as Mechanic
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}

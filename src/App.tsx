@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import UserSignup from "./pages/UserSignup";
@@ -33,9 +34,9 @@ const App = () => (
           <Route path="/find-mechanic" element={<FindMechanic />} />
           <Route path="/mechanic-profile/:id" element={<MechanicProfile />} />
           <Route path="/request-help/:id" element={<RequestHelp />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/vehicle-management" element={<VehicleManagement />} />
-          <Route path="/payment-methods" element={<PaymentMethods />} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/vehicle-management" element={<ProtectedRoute><VehicleManagement /></ProtectedRoute>} />
+          <Route path="/payment-methods" element={<ProtectedRoute><PaymentMethods /></ProtectedRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

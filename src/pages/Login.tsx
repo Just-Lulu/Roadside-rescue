@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -9,38 +9,41 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { toast } from 'sonner';
+import { useAuth } from '@/hooks/useAuth';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { signIn, signInWithGoogle, user } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success('Successfully logged in!');
-      console.log('Login submitted', { email, password });
-      // Here you would handle authentication with Supabase
+    const { error } = await signIn(email, password);
+    
+    if (!error) {
       navigate('/dashboard');
-    }, 1000);
+    }
+    
+    setIsLoading(false);
   };
 
-  const handleSocialLogin = (provider: string) => {
-    setIsLoading(true);
-    // Simulate social auth
-    setTimeout(() => {
+  const handleSocialLogin = async (provider: string) => {
+    if (provider === 'Google') {
+      setIsLoading(true);
+      await signInWithGoogle();
       setIsLoading(false);
-      toast.success(`Successfully signed in with ${provider}`);
-      console.log(`Login with ${provider}`);
-      // Here you would handle social auth with Supabase
-      navigate('/dashboard');
-    }, 1000);
+    }
   };
 
   return (
