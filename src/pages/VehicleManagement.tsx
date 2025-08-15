@@ -8,38 +8,22 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { toast } from 'sonner';
 import { Car, Plus, Edit, Trash2 } from 'lucide-react';
-
-interface Vehicle {
-  id: string;
-  make: string;
-  model: string;
-  year: string;
-  color: string;
-  licensePlate: string;
-}
+import { useVehicles } from '@/hooks/useVehicles';
+import { useAuth } from '@/hooks/useAuth';
 
 const VehicleManagement = () => {
   const navigate = useNavigate();
-  const [vehicles, setVehicles] = useState<Vehicle[]>([
-    {
-      id: '1',
-      make: 'Toyota',
-      model: 'Camry',
-      year: '2020',
-      color: 'Blue',
-      licensePlate: 'LAG-123-AB'
-    }
-  ]);
+  const { user } = useAuth();
+  const { vehicles, loading, addVehicle, updateVehicle, deleteVehicle } = useVehicles();
   const [showAddForm, setShowAddForm] = useState(false);
-  const [editingVehicle, setEditingVehicle] = useState<Vehicle | null>(null);
+  const [editingVehicle, setEditingVehicle] = useState<any>(null);
   const [formData, setFormData] = useState({
     make: '',
     model: '',
     year: '',
     color: '',
-    licensePlate: ''
+    license_plate: ''
   });
 
   const currentYear = new Date().getFullYear();
@@ -50,50 +34,64 @@ const VehicleManagement = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (editingVehicle) {
-      setVehicles(prev => prev.map(v => 
-        v.id === editingVehicle.id ? { ...v, ...formData } : v
-      ));
-      toast.success("Vehicle updated successfully!");
-      setEditingVehicle(null);
-    } else {
-      const newVehicle: Vehicle = {
-        id: Date.now().toString(),
-        ...formData
-      };
-      setVehicles(prev => [...prev, newVehicle]);
-      toast.success("Vehicle added successfully!");
+    if (!user) {
+      navigate('/login');
+      return;
     }
     
-    setFormData({ make: '', model: '', year: '', color: '', licensePlate: '' });
+    if (editingVehicle) {
+      await updateVehicle(editingVehicle.id, {
+        ...formData,
+        year: parseInt(formData.year)
+      });
+      setEditingVehicle(null);
+    } else {
+      await addVehicle({
+        ...formData,
+        year: parseInt(formData.year)
+      });
+    }
+    
+    setFormData({ make: '', model: '', year: '', color: '', license_plate: '' });
     setShowAddForm(false);
   };
 
-  const handleEdit = (vehicle: Vehicle) => {
+  const handleEdit = (vehicle: any) => {
     setFormData({
       make: vehicle.make,
       model: vehicle.model,
-      year: vehicle.year,
+      year: vehicle.year.toString(),
       color: vehicle.color,
-      licensePlate: vehicle.licensePlate
+      license_plate: vehicle.license_plate
     });
     setEditingVehicle(vehicle);
     setShowAddForm(true);
   };
 
-  const handleDelete = (id: string) => {
-    setVehicles(prev => prev.filter(v => v.id !== id));
-    toast.success("Vehicle removed successfully!");
+  const handleDelete = async (id: string) => {
+    await deleteVehicle(id);
   };
 
   const resetForm = () => {
-    setFormData({ make: '', model: '', year: '', color: '', licensePlate: '' });
+    setFormData({ make: '', model: '', year: '', color: '', license_plate: '' });
     setEditingVehicle(null);
     setShowAddForm(false);
   };
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <div className="flex-grow flex items-center justify-center">
+          <p>Please log in to manage your vehicles.</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -169,12 +167,12 @@ const VehicleManagement = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="licensePlate">License Plate</Label>
+                      <Label htmlFor="license_plate">License Plate</Label>
                       <Input
-                        id="licensePlate"
-                        name="licensePlate"
+                        id="license_plate"
+                        name="license_plate"
                         placeholder="LAG-123-AB"
-                        value={formData.licensePlate}
+                        value={formData.license_plate}
                         onChange={handleChange}
                         required
                       />
@@ -205,7 +203,7 @@ const VehicleManagement = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-gray-600 mb-4">
-                    License Plate: <span className="font-medium">{vehicle.licensePlate}</span>
+                    License Plate: <span className="font-medium">{vehicle.license_plate}</span>
                   </p>
                   <div className="flex gap-2">
                     <Button 

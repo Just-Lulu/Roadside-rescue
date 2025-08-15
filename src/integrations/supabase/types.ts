@@ -14,6 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
+      mechanic_profiles: {
+        Row: {
+          address: string | null
+          average_response_time: number | null
+          bio: string | null
+          business_hours: Json | null
+          business_name: string
+          created_at: string
+          id: string
+          is_available: boolean | null
+          latitude: number | null
+          longitude: number | null
+          phone: string | null
+          rating: number | null
+          review_count: number | null
+          services_offered: Json | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address?: string | null
+          average_response_time?: number | null
+          bio?: string | null
+          business_hours?: Json | null
+          business_name: string
+          created_at?: string
+          id?: string
+          is_available?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          phone?: string | null
+          rating?: number | null
+          review_count?: number | null
+          services_offered?: Json | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address?: string | null
+          average_response_time?: number | null
+          bio?: string | null
+          business_hours?: Json | null
+          business_name?: string
+          created_at?: string
+          id?: string
+          is_available?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          phone?: string | null
+          rating?: number | null
+          review_count?: number | null
+          services_offered?: Json | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -47,6 +104,145 @@ export type Database = {
           updated_at?: string
           user_id?: string
           user_type?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          id: string
+          mechanic_id: string
+          rating: number
+          service_request_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          mechanic_id: string
+          rating: number
+          service_request_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          mechanic_id?: string
+          rating?: number
+          service_request_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_service_request_id_fkey"
+            columns: ["service_request_id"]
+            isOneToOne: false
+            referencedRelation: "service_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      service_requests: {
+        Row: {
+          contact_method: string
+          created_at: string
+          description: string
+          estimated_arrival: number | null
+          id: string
+          issue_type: string
+          location_address: string | null
+          location_latitude: number | null
+          location_longitude: number | null
+          mechanic_id: string | null
+          phone_number: string | null
+          status: string
+          updated_at: string
+          user_id: string
+          vehicle_id: string | null
+        }
+        Insert: {
+          contact_method: string
+          created_at?: string
+          description: string
+          estimated_arrival?: number | null
+          id?: string
+          issue_type: string
+          location_address?: string | null
+          location_latitude?: number | null
+          location_longitude?: number | null
+          mechanic_id?: string | null
+          phone_number?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+          vehicle_id?: string | null
+        }
+        Update: {
+          contact_method?: string
+          created_at?: string
+          description?: string
+          estimated_arrival?: number | null
+          id?: string
+          issue_type?: string
+          location_address?: string | null
+          location_latitude?: number | null
+          location_longitude?: number | null
+          mechanic_id?: string | null
+          phone_number?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+          vehicle_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_requests_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vehicles: {
+        Row: {
+          color: string
+          created_at: string
+          id: string
+          license_plate: string
+          make: string
+          model: string
+          updated_at: string
+          user_id: string
+          year: number
+        }
+        Insert: {
+          color: string
+          created_at?: string
+          id?: string
+          license_plate: string
+          make: string
+          model: string
+          updated_at?: string
+          user_id: string
+          year: number
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          id?: string
+          license_plate?: string
+          make?: string
+          model?: string
+          updated_at?: string
+          user_id?: string
+          year?: number
         }
         Relationships: []
       }

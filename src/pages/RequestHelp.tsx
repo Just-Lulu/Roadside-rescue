@@ -10,57 +10,58 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Calendar, Clock, MessageCircle, Phone } from 'lucide-react';
-import { toast } from 'sonner';
+import { useServiceRequests, ServiceRequest } from '@/hooks/useServiceRequests';
+import { useAuth } from '@/hooks/useAuth';
 
 const RequestHelp = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [issueType, setIssueType] = useState('flat-tire');
+  const { user } = useAuth();
+  const { createRequest } = useServiceRequests();
+  const [issueType, setIssueType] = useState<ServiceRequest['issue_type']>('flat-tire');
   const [description, setDescription] = useState('');
-  const [contactMethod, setContactMethod] = useState('phone');
+  const [contactMethod, setContactMethod] = useState<ServiceRequest['contact_method']>('phone');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+    
     if (!description.trim()) {
-      toast.error('Please provide a description of your issue');
       return;
     }
     
     if (contactMethod === 'phone' && !phoneNumber.trim()) {
-      toast.error('Please provide your phone number');
       return;
     }
 
     setIsSubmitting(true);
     
-    // Simulate API request
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
       const requestData = {
-        mechanicId: id,
-        issueType,
+        mechanic_id: id,
+        issue_type: issueType,
         description,
-        contactMethod,
-        phoneNumber: contactMethod === 'phone' ? phoneNumber : null,
-        timestamp: new Date().toISOString()
+        contact_method: contactMethod,
+        phone_number: contactMethod === 'phone' ? phoneNumber : undefined,
       };
       
-      console.log('Service request submitted:', requestData);
+      const result = await createRequest(requestData);
       
-      toast.success('Request submitted successfully! The mechanic will contact you shortly.');
-      
-      // Redirect to dashboard after successful submission
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 2000);
+      if (result) {
+        // Redirect to dashboard after successful submission
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 2000);
+      }
       
     } catch (error) {
       console.error('Error submitting request:', error);
-      toast.error('Failed to submit request. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -95,7 +96,7 @@ const RequestHelp = () => {
                   <label htmlFor="issue-type" className="block text-sm font-medium text-gray-700">
                     What's the issue? *
                   </label>
-                  <Select value={issueType} onValueChange={setIssueType}>
+                  <Select value={issueType} onValueChange={(value) => setIssueType(value as ServiceRequest['issue_type'])}>
                     <SelectTrigger id="issue-type">
                       <SelectValue placeholder="Select issue type" />
                     </SelectTrigger>
@@ -128,7 +129,7 @@ const RequestHelp = () => {
                   <label className="block text-sm font-medium text-gray-700">
                     Preferred Contact Method *
                   </label>
-                  <Tabs value={contactMethod} onValueChange={setContactMethod} className="w-full">
+                  <Tabs value={contactMethod} onValueChange={(value) => setContactMethod(value as ServiceRequest['contact_method'])} className="w-full">
                     <TabsList className="grid grid-cols-2 w-full">
                       <TabsTrigger value="phone" className="flex items-center">
                         <Phone className="mr-2 h-4 w-4" />
