@@ -35,7 +35,7 @@ export function useProfiles() {
         .maybeSingle();
 
       if (error) throw error;
-      setProfile(data);
+      setProfile(data as UserProfile);
     } catch (error) {
       console.error('Error fetching profile:', error);
       toast.error('Failed to load profile');
@@ -60,7 +60,7 @@ export function useProfiles() {
 
       if (error) throw error;
 
-      setProfile(data);
+      setProfile(data as UserProfile);
       toast.success('Profile updated successfully!');
       return data;
     } catch (error) {
@@ -86,7 +86,7 @@ export function useProfiles() {
 
       if (error) throw error;
 
-      setProfile(data);
+      setProfile(data as UserProfile);
       toast.success(`Switched to ${newType} mode!`);
       return data;
     } catch (error) {

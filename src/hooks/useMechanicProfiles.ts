@@ -12,8 +12,8 @@ export interface MechanicProfile {
   address?: string;
   latitude?: number;
   longitude?: number;
-  services_offered: Record<string, any>;
-  business_hours: Record<string, any>;
+  services_offered: any;
+  business_hours: any;
   rating: number;
   review_count: number;
   is_available: boolean;
@@ -53,7 +53,7 @@ export function useMechanicProfiles() {
     try {
       const { data, error } = await supabase
         .from('mechanic_profiles')
-        .insert([{ ...profileData, user_id: user.id }])
+        .insert({ ...profileData, user_id: user.id, business_name: profileData.business_name || 'Business Name Required' })
         .select()
         .single();
 
